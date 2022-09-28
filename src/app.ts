@@ -6,20 +6,20 @@ import mongoose = require("mongoose");
 export class App {
     public app: Application;
 
+    private apiPath: string = env().apiPath || '/api';
+    private staticPath: string = env().staticPath || "/public";
+
     /**
      * @param port Port Application listens on
      * @param middleware Array of middleware to be applied to app 
+     * @param options - Array of options for app
      * @param routes Array of express.Router objects for application routes
-     * @param apiPath Base path for this api that will be prepended to all routes
-     * @param staticPath path to folder for public files express will make available
      */
     constructor(
         private port: number,
         middleware: Array<any>,
         options: Array<any>,
-        routes: Array<express.Router>,
-        private apiPath: string = env().apiPath ? env().apiPath : '/api',
-        private staticPath: string = env().staticPath ? env().staticPath :"public"
+        routes: Array<express.Router>
     ) {
         this.app = express();
         this.options(options);
@@ -63,18 +63,16 @@ export class App {
     /**
      * Creates a connection to a MongoDB instance using mongoose
      * @param uri MongoDB connection string
-     */
+    */
     public mongoDB(uri: string) {
         const connect = () => {
             const options: mongoose.ConnectOptions = { keepAlive: true };
-            mongoose.connect(uri, options)
-                .then(() => {
-                    console.log('DB connected successfully');
-                    return;
-                }).catch((error) => {
-                    console.log("DB connection failed. \n", error);
-                    return process.exit(1);
-                });
+            mongoose.connect(uri, options).then(() => {
+                console.log('DB connected successfully');
+            }).catch((error) => {
+                console.log("DB connection failed. \n", error);
+                return process.exit(1);
+            });
         };
         
         connect();
@@ -83,8 +81,7 @@ export class App {
     }
 
     public listen() {
-        const PORT = (env().stage === 'dev') ? this.port : process.env.PORT || this.port;
-        this.app.listen(PORT, () => {
+        this.app.listen(this.port, () => {
             console.log(`[${env().stage}] - Server started at http://localhost:${this.port}${this.apiPath}`);
         });
     }

@@ -6,28 +6,19 @@ import { App } from "./src/app";
 const dotenv = require('dotenv');
 dotenv.config()
 
-const port: number = env().port ?? 8080;
-let dbConString;
+const PORT: number = env().port; // getting the port based on current environment.
 
 /* Configure App instance*/
-const app = new App(
-  port,
-  [],
-  [],
-  []
-);
+// making a new object for App class.
+const app = new App(PORT, [], [], []);
+app.listen();
 
 try {
-  // uncomment this one you update the dev.env.ts
+  /* Connect to MongoDB*/
   const {user, pw, name, account} = env().db;
-  dbConString = env().db.uri(user,pw,name,account);
+  const DB_URI = env().db.uri(user,pw,name,account);
+  app.mongoDB(DB_URI);
 } catch(e) {
   console.log(e);
   console.log("Failed to create DB Connection string");
 }
-
-/* Connect to MongoDB*/
-dbConString ? app.mongoDB(dbConString) : console.log("Not Starting MongoDB Connection");
-
-/* Launch!*/
-app.listen();
