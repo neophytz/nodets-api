@@ -1,7 +1,7 @@
 import { env } from "./src/env";
 import { App } from "./src/app";
-// import { middleware, options } from "./src/middleware";
-// import { allRoutes } from "./src/routes/routes.module";
+import { __middleware } from "./src/middleware";
+import { allRoutes } from "./src/routes";
 
 const dotenv = require('dotenv');
 dotenv.config()
@@ -10,7 +10,7 @@ const PORT: number = env().port; // getting the port based on current environmen
 
 /* Configure App instance*/
 // making a new object for App class.
-const app = new App(PORT, [], [], []);
+const app = new App(PORT, __middleware, [], allRoutes);
 app.listen();
 
 try {

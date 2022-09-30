@@ -19,7 +19,7 @@ export class App {
         private port: number,
         middleware: Array<any>,
         options: Array<any>,
-        routes: Array<express.Router>
+        routes: Record<string, express.Router>
     ) {
         this.app = express();
         this.options(options);
@@ -49,10 +49,14 @@ export class App {
      * Attaches route objects to app, appending routes to `apiPath`
      * @param routes Array of router objects to be attached to the app
      */
-    private routes(routes: Array<express.Router>) {
-        routes.forEach((r) => {
-            this.app.use(`${this.apiPath}`, r);
-        });
+    private routes(routes: Record<string, express.Router>) {
+        for(const _routeKey in routes){
+            this.app.use(`${this.apiPath}/${_routeKey}`, routes[_routeKey]);
+        }
+        /** === SAMPLE OUTPUT ====
+         * this.api.use('/api/students', studentRouter);
+         * this.api.use('/api/admin', adminRouter);
+        */
     }
 
     /* Enable express to serve up static assets*/

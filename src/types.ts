@@ -1,6 +1,8 @@
 // name of this file could be <project_name>.types.ts
 // project name - wisa; then file name = wisa.types.ts
 
+import { Router } from "express";
+
 export type IEnvironmentType = 'production' | 'staging' | 'development' | 'beta';
 
 export interface IPopulate {
