@@ -1,14 +1,14 @@
-import cors, { CorsOptions } from "cors";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import rateLimit from "express-rate-limit";
 
-const corsOptions: CorsOptions = {
-    origin: 'localhost:3000',
-    preflightContinue: true,
-    credentials: true,
-}
+// const corsOptions: CorsOptions = {
+//     origin: 'localhost:3000',
+//     preflightContinue: true,
+//     credentials: true,
+// }
 
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes

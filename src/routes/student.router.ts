@@ -1,18 +1,23 @@
-import { StatusCodes } from "http-status-codes";
-import express, { Request, Response, Router } from 'express';
+import express, { Router } from 'express';
+import { getAllStudents } from "../controller/student.controller";
 
 const studentRouter: Router = express.Router();
 
-studentRouter.get('/', (req: Request, res: Response) => {
-    res.status(StatusCodes.OK).json({
-        done: "welcome",
-    })
-})
+/*
+    ============== old method =====================
+    studentRouter.get('/all', getAllStudents)
+    studentRouter.get('/:student_id', getAllStudents)
+    studentRouter.post('/', ()=>{});
+    studentRouter.put('/', ()=>{});
+    studentRouter.delete('/', ()=>{});
+*/
 
-studentRouter.get('/:student_id', (req: Request, res: Response) => {
-    res.status(StatusCodes.OK).json({
-        done: "welcome",
-    })
-})
+// new classic and sexy method.
+studentRouter
+    .get('/all', getAllStudents)
+    .get('/:student_id', ()=>{})
+    .post('/', ()=>{})
+    .put('/', ()=>{})
+    .delete('/', ()=>{})
 
 export { studentRouter };

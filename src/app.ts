@@ -53,9 +53,15 @@ export class App {
         for(const _routeKey in routes){
             this.app.use(`${this.apiPath}/${_routeKey}`, routes[_routeKey]);
         }
+        /**
+         * this.api.use('/api', studentRouter);
+         * this.api.use('/api', facultyRouter);
+         * this.api.use('/api', staffRouter);
+        */
+
         /** === SAMPLE OUTPUT ====
          * this.api.use('/api/students', studentRouter);
-         * this.api.use('/api/admin', adminRouter);
+         * this.api.use('/api/admin', adminAuthMiddleware, adminRouter);
         */
     }
 
