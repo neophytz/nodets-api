@@ -1,8 +1,8 @@
-import { Document, model, Schema, SchemaDefinitionProperty } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
 export interface IStudent extends Document {
     name: string,
-    phone: SchemaDefinitionProperty<number>,
+    phone: number,
 }
 
 const studentSchema = new Schema<IStudent>({
@@ -12,7 +12,7 @@ const studentSchema = new Schema<IStudent>({
     },
     phone: {
         type: Number,
-        unique: [true, 'Phone number must be unique'],
+        unique: true,
         require: [true, 'Student phone is mandatory']
     }
 }, {

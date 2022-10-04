@@ -16,3 +16,9 @@ export const getAllStudents = async (req: Request, res: Response) => {
     }
 }
 
+export const createStudent = async (req:Request, res: Response) => {
+    // const _newStudent = await Student.create(req.body);
+    // _newStudent will have all the properties of the IStudent because
+    // we defined 'Student' collection like this -> model<IStudent>('Student', studentSchema);
+    // for more details, check student.schema.ts
+}
