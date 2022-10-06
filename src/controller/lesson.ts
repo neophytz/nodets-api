@@ -39,3 +39,23 @@ export const deleteStudent = async (req: Request, res: Response) => {
     const newStudent = await Student.findByIdAndDelete(id);
     return res.status(StatusCodes.CREATED).json(newStudent);
 }
+
+
+
+class Papa {
+    constructor(wife: string){
+
+    }
+}
+
+class Roy extends Papa {
+    public mom: string;
+    constructor(girlfriend: string){
+        const _mom: string = "roy's mom"; // local variable;
+        super(_mom);
+        this.mom = _mom;
+    }
+}
+
+const chotaRoy = new Roy("bhabhi");
+

@@ -4,6 +4,7 @@
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { Document, Model, ObjectId } from "mongoose";
+import { IPagination } from "../types";
 import { http_formatter } from "../util";
 
 // we have created a generic base controller.
@@ -20,6 +21,28 @@ export class BaseController<T> {
             const queriedRes = await this.model.find(query);
             return res.status(StatusCodes.OK).json(http_formatter(queriedRes));
         } catch (error) {
+            console.log(error);
+            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+        }
+    }
+
+    public async paginatedFind(res: Response, pagination:IPagination, query: any){
+        try {
+            const {perPage = 20, pageNo  = 1} = pagination;
+            const queriedRes = await this.model.find(query).skip((pageNo - 1)*perPage).limit(perPage);
+            return res.status(StatusCodes.OK).json(http_formatter(queriedRes));
+        } catch (error) {
+            console.log(error);
+            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+        }
+    }
+
+    public async findOne(res: Response, query: any){
+        try {
+            const queriedRes = await this.model.findOne(query);
+            return res.status(StatusCodes.OK).json(http_formatter(queriedRes));
+        } catch (error) {
+            console.log(error);
             return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
         }
     }

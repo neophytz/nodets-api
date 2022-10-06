@@ -11,6 +11,11 @@ export interface IPopulate {
   populate?: IPopulate;
 }
 
+export interface IPagination {
+  perPage?: number,
+  pageNo?: number,
+}
+
 // ! need to explain deep populate
 // const populate = {
 //   path: 'manager',

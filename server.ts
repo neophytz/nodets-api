@@ -11,7 +11,6 @@ const PORT: number = env().port; // getting the port based on current environmen
 /* Configure App instance*/
 // making a new object for App class.
 const app = new App(PORT, __middleware, [], allRoutes);
-app.listen();
 
 try {
   /* Connect to MongoDB*/
@@ -22,3 +21,5 @@ try {
   console.log(e);
   console.log("Failed to create DB Connection string");
 }
+
+app.listen();

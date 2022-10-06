@@ -19,7 +19,7 @@ const studentRouter: Router = express.Router();
 
 studentRouter
     .get('/all', (req, res) => _studentController.find(res, {}))
-    .get('/:id', (req, res) => _studentController.find(res, {_id: req.params.id}))
+    .get('/:id', (req, res) => _studentController.findOne(res, {_id: req.params.id}))
     .post('/', (req, res) => _studentController.create(res, req.body))
     .put('/:id', (req, res) => _studentController.update(res, req.params.id, req.body))
     .delete('/:id', (req, res) => _studentController.delete(res, req.params.id))

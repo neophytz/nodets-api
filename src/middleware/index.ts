@@ -24,8 +24,8 @@ export const __middleware = [
     cors(), // cors("*")
     apiLimiter,
     (req: Request, res: Response, next: NextFunction) => {
-        res.set('Cache-Control', 'no-store, max-age=0')
-        next();
+      res.set('Cache-Control', 'no-store, max-age=0')
+      next();
     },
     (req: Request, res: Response, next: NextFunction) => {
       res.header("Access-Control-Allow-Origin", '*');
@@ -35,7 +35,7 @@ export const __middleware = [
     (error:any, req:Request, res:Response, next:NextFunction) => {
       if (error.type == 'time-out') return res.status(StatusCodes.REQUEST_TIMEOUT).json(error)
       else return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: error.message
+        message: error.message,
       })
     }
 ];
