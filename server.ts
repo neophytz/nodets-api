@@ -10,7 +10,7 @@ const PORT: number = env().port; // getting the port based on current environmen
 
 /* Configure App instance*/
 // making a new object for App class.
-const app = new App(PORT, __middleware, [], allRoutes);
+const app = new App(PORT, __middleware, allRoutes);
 
 try {
   /* Connect to MongoDB*/

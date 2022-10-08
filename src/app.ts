@@ -18,11 +18,9 @@ export class App {
     constructor(
         private port: number,
         middleware: Array<any>,
-        options: Array<any>,
         routes: Record<string, express.Router>
     ) {
         this.app = express();
-        this.options(options);
         this.middleware(middleware);
         this.routes(routes);
         this.assets(this.staticPath);
@@ -30,7 +28,7 @@ export class App {
 
     /**
      * @param _middleware Array of middleware to be loaded into express app
-     */
+    */
     private middleware(_middleware: any[]) {
         _middleware.forEach((m) => {
             this.app.use(m);

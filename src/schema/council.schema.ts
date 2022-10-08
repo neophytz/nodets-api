@@ -11,7 +11,7 @@ export const AllowedDesignations = [
 
 export type Designation = typeof AllowedDesignations[number];
 
-interface ICoreCouncil extends Document {
+export interface ICouncil extends Document {
     name: string,
     phone: number,
     email: string,
@@ -21,7 +21,7 @@ interface ICoreCouncil extends Document {
     designation: Designation
 }
 
-const coreCouncilSchema = new Schema<ICoreCouncil>({
+const councilSchema = new Schema<ICouncil>({
     name: {
         type: String,
         minlength: 2,
@@ -61,4 +61,4 @@ const coreCouncilSchema = new Schema<ICoreCouncil>({
     versionKey: true,
 })
 
-export const CoreCouncil = model<ICoreCouncil>('CoreCouncil', coreCouncilSchema);
+export const Council = model<ICouncil>('Council', councilSchema);
