@@ -34,7 +34,7 @@ const taskSchema = new Schema<ITask>({
     }
 }, {
     versionKey: false,
-    timestamps: false
+    timestamps: true
 });
 
 export const Task = model<ITask>('Task', taskSchema);

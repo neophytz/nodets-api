@@ -16,13 +16,17 @@ export class BaseController<T> {
         // this.model can be 'Student', 'Officer', 'Task', 'Any Schema'
     }
     
+    public errorHandler(res: Response, error: any, statusCode: StatusCodes = StatusCodes.BAD_REQUEST){
+        console.log('[ERROR]', error);
+        return res.status(statusCode).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+    }
+
     public async find(res: Response, query: any){
         try {
             const queriedRes = await this.model.find(query);
             return res.status(StatusCodes.OK).json(http_formatter(queriedRes));
         } catch (error) {
-            console.log(error);
-            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+            this.errorHandler(res, error);
         }
     }
 
@@ -32,8 +36,7 @@ export class BaseController<T> {
             const queriedRes = await this.model.find(query).skip((pageNo - 1)*perPage).limit(perPage);
             return res.status(StatusCodes.OK).json(http_formatter(queriedRes));
         } catch (error) {
-            console.log(error);
-            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+            this.errorHandler(res, error)
         }
     }
 
@@ -42,8 +45,7 @@ export class BaseController<T> {
             const queriedRes = await this.model.findOne(query);
             return res.status(StatusCodes.OK).json(http_formatter(queriedRes));
         } catch (error) {
-            console.log(error);
-            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+            this.errorHandler(res, error)
         }
     }
 
@@ -52,7 +54,7 @@ export class BaseController<T> {
             const createdDoc = await this.model.create(document);
             return res.status(StatusCodes.CREATED).json(http_formatter(createdDoc))
         } catch (error) {
-            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+            this.errorHandler(res, error)
         }
     }
 
@@ -61,7 +63,7 @@ export class BaseController<T> {
             const updatedDocument = await this.model.findByIdAndUpdate(id, document);
             return res.status(StatusCodes.OK).json(http_formatter(updatedDocument))
         } catch (error) {
-            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+            this.errorHandler(res, error)
         }
     }
 
@@ -71,7 +73,7 @@ export class BaseController<T> {
             const updatedDocument = await this.model.findByIdAndUpdate(id, {isDeleted: true});
             return res.status(StatusCodes.OK).json(http_formatter(updatedDocument))
         } catch (error) {
-            return res.status(StatusCodes.BAD_REQUEST).json(http_formatter(error, this.DEFAULT_ERROR_MSG, false));
+            this.errorHandler(res, error)
         }
     }
 }
