@@ -35,9 +35,9 @@ export class App {
         });
     }
 
-    private options(_options:any[]){
-        _options.forEach(op => this.app.options(op));
-    }
+    // private options(_options:any[]){
+    //     _options.forEach(op => this.app.options(op));
+    // }
 
     public addMiddleWare(middleWare: any) {
         this.app.use(middleWare);
