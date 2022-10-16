@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { isUserAuthorized } from "../services/auth.service";
 import { upload_service } from "../services/file_upload.service";
 import { _postController } from "./post.controller";
 
@@ -7,6 +8,7 @@ export const postRouter = Router();
 postRouter
     .get('/', (req: Request, res: Response) => _postController.find(res, {}))
     .get('/:id', (req: Request, res: Response) => _postController.findOne(res, {_id: req.params.id}))
+    .post('/login', (req: Request, res: Response) => _postController.login(req, res))
     .post('/', 
         upload_service.single('image'), // req.path -> contains the url were the files is being uploaded.
         (req: any, res, next) => {
@@ -16,6 +18,7 @@ postRouter
             req.body.image_url = req.path;
             next();
         },
-        (req, res) => _postController.create(res, req.body))
-    .patch('/:id', (req, res) => _postController.update(res, req.params.id, req.body))
+        (req, res) => _postController.storeHashedPassword(res, req.body)
+    )
+    .patch('/:id', isUserAuthorized, (req, res) => _postController.update(res, req.params.id, req.body))
     .delete('/:id', (req, res) => _postController.delete(res, req.params.id))
